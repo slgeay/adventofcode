@@ -20,4 +20,5 @@ def day(d:str, i:str) -> None:
     """Launch the puzzle of day D part I
     
     ex: app day 02 b"""
-    getattr(globals()[f'day{d}'], f'day{d}{i}')()
+    with open(f'data/day{d}.txt') as f:
+        getattr(globals()[f'day{d}'], f'day{d}{i}')(f.readlines())

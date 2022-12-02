@@ -1,5 +1,5 @@
 import click
-import day01
+import day01, day02
 
 
 @click.group()
@@ -20,3 +20,11 @@ def day01a() -> None:
 @main.command()
 def day01b() -> None:
     day01.day01b()
+
+@main.command()
+def day02a() -> None:
+    day02.day02a()
+
+@main.command()
+def day02b() -> None:
+    day02.day02b()

@@ -1,5 +1,5 @@
 import click
-import day01, day02
+from . import *
 
 
 @click.group()
@@ -14,17 +14,10 @@ def hello() -> None:
 
 
 @main.command()
-def day01a() -> None:
-    day01.day01a()
-
-@main.command()
-def day01b() -> None:
-    day01.day01b()
-
-@main.command()
-def day02a() -> None:
-    day02.day02a()
-
-@main.command()
-def day02b() -> None:
-    day02.day02b()
+@click.argument('d')
+@click.argument('i')
+def day(d:str, i:str) -> None:
+    """Launch the puzzle of day D part I
+    
+    ex: app day 02 b"""
+    getattr(globals()[f'day{d}'], f'day{d}{i}')()

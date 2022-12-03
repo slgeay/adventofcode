@@ -21,4 +21,4 @@ def day(d:str, i:str) -> None:
     
     ex: app day 02 b"""
     with open(f'data/day{d}.txt') as f:
-        getattr(globals()[f'day{d}'], f'day{d}{i}')(f.readlines())
+        getattr(globals()[f'day{d}'], f'day{d}{i}')(f.read().splitlines())

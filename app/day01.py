@@ -3,7 +3,7 @@ def day01a(lines):
     max_calories = 0
 
     for l in lines:
-        if l == "\n":
+        if l == "":
             if current_calories > max_calories:
                 max_calories = current_calories
             current_calories = 0
@@ -18,7 +18,7 @@ def day01b(lines):
     max_calories = [0, 0, 0]
 
     for l in lines:
-        if l == "\n":
+        if l == "":
             if current_calories > max_calories[0]:
                 max_calories = [current_calories, max_calories[0], max_calories[1]]
             elif current_calories > max_calories[1]:

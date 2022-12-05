@@ -1,8 +1,16 @@
 def day05a(lines: list[str]):
     # Parsing
     sep = lines.index("")
-    start, procedure = lines[:sep-1], lines[sep+1:]
-    stacks = [[]] + [[letter for line in reversed(start) for letter in line[4 * i + 1] if letter != " "] for i in range((len(start[0])+1)//4)]
+    start, procedure = lines[: sep - 1], lines[sep + 1 :]
+    stacks = [[]] + [
+        [
+            letter
+            for line in reversed(start)
+            for letter in line[4 * i + 1]
+            if letter != " "
+        ]
+        for i in range((len(start[0]) + 1) // 4)
+    ]
 
     # Rearrangment
     for move in procedure:
@@ -16,8 +24,16 @@ def day05a(lines: list[str]):
 def day05b(lines: list[str]):
     # Parsing
     sep = lines.index("")
-    start, procedure = lines[:sep-1], lines[sep+1:]
-    stacks = [[]] + [[letter for line in reversed(start) for letter in line[4 * i + 1] if letter != " "] for i in range((len(start[0])+1)//4)]
+    start, procedure = lines[: sep - 1], lines[sep + 1 :]
+    stacks = [[]] + [
+        [
+            letter
+            for line in reversed(start)
+            for letter in line[4 * i + 1]
+            if letter != " "
+        ]
+        for i in range((len(start[0]) + 1) // 4)
+    ]
 
     # Rearrangment
     for move in procedure:

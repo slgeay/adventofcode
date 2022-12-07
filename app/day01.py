@@ -1,8 +1,8 @@
-def day01a(lines):
+def day01a(lines: list[str]) -> str:
     current_calories = 0
     max_calories = 0
 
-    for l in lines:
+    for l in lines + [""]:
         if l == "":
             if current_calories > max_calories:
                 max_calories = current_calories
@@ -10,14 +10,14 @@ def day01a(lines):
         else:
             current_calories += int(l)
 
-    print(max_calories)
+    return str(max_calories)
 
 
-def day01b(lines):
+def day01b(lines: list[str]) -> str:
     current_calories = 0
     max_calories = [0, 0, 0]
 
-    for l in lines:
+    for l in lines + [""]:
         if l == "":
             if current_calories > max_calories[0]:
                 max_calories = [current_calories, max_calories[0], max_calories[1]]
@@ -29,4 +29,4 @@ def day01b(lines):
         else:
             current_calories += int(l)
 
-    print(sum(max_calories))
+    return str(sum(max_calories))

@@ -7,7 +7,7 @@ def day02a(lines):
     # (ord(l[2]) - ord(l[0]) - 1) % 3 ==> a synchronized stable outcome score (0/1/2)
     # previous_result * 3 ==> the actual outcome score (0/3/6)
 
-    print(sum([ord(l[2]) - 87 + ((ord(l[2]) - ord(l[0]) - 1) % 3) * 3 for l in lines]))
+    return str(sum([ord(l[2]) - 87 + ((ord(l[2]) - ord(l[0]) - 1) % 3) * 3 for l in lines]))
 
 
 def day02b(lines):
@@ -20,6 +20,4 @@ def day02b(lines):
     # ord(l[2]) - ord_of_X) ==> the outcome (0/1/2)
     # previous_result * 3 ==> the actual outcome score (0/3/6)
 
-    print(
-        sum([(ord(l[0]) + ord(l[2]) - 1) % 3 + 1 + (ord(l[2]) - 88) * 3 for l in lines])
-    )
+    return str(sum([(ord(l[0]) + ord(l[2]) - 1) % 3 + 1 + (ord(l[2]) - 88) * 3 for l in lines]))

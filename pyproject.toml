@@ -34,3 +34,6 @@ addopts = "--benchmark-disable -p no:nose"
 
 [tool.poetry.scripts]
 app = "app.main:main"
+
+[tool.black]
+line-length = 1000

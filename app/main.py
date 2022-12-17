@@ -3,6 +3,7 @@ from aocd.models import Puzzle
 import click
 import os
 import re
+import time
 
 from . import *
 
@@ -29,13 +30,21 @@ def day(d: str, i: str, submit: bool) -> None:
     func = getattr(globals()[f"day{d}"], f"day{d}{i}")
     with open(f"sample/day{d}.txt") as f, open(f"sample_results/day{d}{i}.txt") as r:
         print("--- Sample ---")
-        print(res := func(f.read().splitlines()))
+        lines = f.read().splitlines()
+        t = time.monotonic_ns()
+        res = func(lines)
+        t = time.monotonic_ns() - t
+        print(f"{t//10**3/10**3} ms => ", res)
         print("=> " + ("OK" if (t:=(res == r.read())) else "ERROR"))
     if not t:
         return
     with open(f"data/day{d}.txt") as f:
         print("--- Data ---")
-        print(res := func(f.read().splitlines()))
+        lines = f.read().splitlines()
+        t = time.monotonic_ns()
+        res = func(lines)
+        t = time.monotonic_ns() - t
+        print(f"{t//10**3/10**3} ms => ", res)
         if submit:
             aocd.submit(res, day=int(d), year=2022, part=i)
 

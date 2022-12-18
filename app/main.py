@@ -23,7 +23,8 @@ def hello() -> None:
 @click.argument("d")
 @click.argument("i")
 @click.option("-s", "--submit", is_flag=True, default=False, help="Submit your answer")
-def day(d: str, i: str, submit: bool) -> None:
+@click.option("-f", "--force", is_flag=True, default=False, help="Try the data even if the sample failed")
+def day(d: str, i: str, submit: bool, force: bool) -> None:
     """Launch the puzzle of day D part I
 
     ex: app day 02 b"""
@@ -36,7 +37,7 @@ def day(d: str, i: str, submit: bool) -> None:
         t = time.monotonic_ns() - t
         print(f"{t//10**3/10**3} ms => ", res)
         print("=> " + ("OK" if (t:=(res == r.read())) else "ERROR"))
-    if not t:
+    if not t and not force:
         return
     with open(f"data/day{d}.txt") as f:
         print("--- Data ---")

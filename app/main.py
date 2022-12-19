@@ -63,11 +63,14 @@ def test() -> None:
 
 
 @main.command()
-@click.argument("d")
+@click.argument("d", default="-1")
 def init(d: str) -> None:
     """Create the files for day D
 
     ex: app init 02"""
+    if d == "-1":
+        d = str(aocd.get.current_day())
+
     if os.path.exists(f"app/day{d}.py"):
         print(f"Day {d} already exists")
         return

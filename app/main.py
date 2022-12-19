@@ -19,6 +19,30 @@ def hello() -> None:
     print("Hello ! :wave:")
 
 
+def print_time(t: int, res: str) -> None:
+    """ Print the time in a human readable format and the result"""
+    if t < (nd:=10**3):
+        print(f"{t} ns => {res}")
+    elif t < (nd:=10**3*(d:=nd)):
+        print(f"{t//d} µs => {res}")
+    elif t < (nd:=10**3*(d:=nd)):
+        print(f"{t//d} ms => {res}")
+    else:
+        s = f"{t//nd%60} s => {res}"
+        if t < (nd:=60*nd):
+            print(s)
+        else:
+            s = f"{t//nd%60} min {s}"
+            if t < (nd:=60*nd):
+                print(s)
+            else:
+                s = f"{t//nd%24} h {s}"
+                if t < (nd:=24*nd):
+                    print(s)
+                else:
+                    print(f"{t//nd} j {s}")
+
+
 @main.command()
 @click.argument("d")
 @click.argument("i")
@@ -35,7 +59,7 @@ def day(d: str, i: str, submit: bool, force: bool) -> None:
         t = time.monotonic_ns()
         res = func(lines)
         t = time.monotonic_ns() - t
-        print(f"{t//10**3/10**3} ms => ", res)
+        print_time(t, res)
         print("=> " + ("OK" if (t:=(res == r.read())) else "ERROR"))
     if not t and not force:
         return
@@ -45,7 +69,7 @@ def day(d: str, i: str, submit: bool, force: bool) -> None:
         t = time.monotonic_ns()
         res = func(lines)
         t = time.monotonic_ns() - t
-        print(f"{t//10**3/10**3} ms => ", res)
+        print_time(t, res)
         if submit:
             aocd.submit(res, day=int(d), year=2022, part=i)
 

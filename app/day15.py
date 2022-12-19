@@ -18,7 +18,7 @@ def day15a(lines: list[str]) -> str:
     return str(sum([any([x >= a[0] and x <= a[1] and not x in bb for a in r]) for x in range(min_x, max_x + 1)]))
 
 
-def merge(a, b, overlaps):
+def day15_merge(a, b, overlaps):
     if a[1] < b[0] - 1 or b[1] < a[0] - 1:
         return False
     if (o := min(a[1], b[1]) - max(a[0], b[0])) >= 0:
@@ -38,7 +38,7 @@ def day15b(lines: list[str]) -> str:
             found = False
             i = intervals.pop()
             for i2 in intervals:
-                if n := merge(i, i2, overlaps):
+                if n := day15_merge(i, i2, overlaps):
                     intervals.remove(i2)
                     intervals.add(n)
                     found = True

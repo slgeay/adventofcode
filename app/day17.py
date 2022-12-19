@@ -1,4 +1,4 @@
-def print_board(board):
+def day17_print_board(board):
     for i in reversed(range(len(board))):
         for j in range(9):
             print("|" if j == 0 or j == 8 else "#" if board[i] & (2**j) else ".", end="")

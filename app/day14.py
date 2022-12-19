@@ -5,7 +5,7 @@ print_start = False
 print_result = False
 
 
-def print_map(b: bool, w: dict[int, set[int]], m: dict[int, set[int]], xmin: int, xmax: int, ymax: int):
+def day14_print_map(b: bool, w: dict[int, set[int]], m: dict[int, set[int]], xmin: int, xmax: int, ymax: int):
     if b:
         print("000", "".join(["x" if x == 500 else " " for x in range(xmin, xmax + 1)]))
         for y in range(0, ymax + 1):
@@ -35,13 +35,13 @@ def day14(lines: list[str], has_floor: bool) -> str:
 
     w = copy.deepcopy(m)
 
-    print_map(print_start, w, m, xmin, xmax, ymax)
+    day14_print_map(print_start, w, m, xmin, xmax, ymax)
 
     count = 0
     x, y = 500, 0
     while True:
         if y == ymax:
-            print_map(print_result, w, m, xmin, xmax, ymax)
+            day14_print_map(print_result, w, m, xmin, xmax, ymax)
             return str(count)
         elif y + 1 in m:
             if not x in (yy := m[y + 1]):
@@ -60,7 +60,7 @@ def day14(lines: list[str], has_floor: bool) -> str:
                 count += 1
 
                 if has_floor and y == 0:
-                    print_map(print_result, w, m, xmin, xmax, ymax)
+                    day14_print_map(print_result, w, m, xmin, xmax, ymax)
                     return str(count)
 
                 x, y = 500, 0

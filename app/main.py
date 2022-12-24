@@ -120,6 +120,7 @@ def init(d: str) -> None:
             pass
 
     with open(f"app/day{d}.py", "w") as f:
-        f.write("\n\n".join([f"def day{d}{i}(lines: list[str]) -> str:\n    return str()\n" for i in ["a", "b"]]))
+        f.write("\n\n".join([f"def day{d}{i}(lines: list[str]) -> str:\n    return day{d}(lines)\n" for i in ["a", "b"]]))
+        f.write(f"\n\ndef day{d}(lines: list[str]) -> str:\n    return str()\n")
 
     print("Done")

@@ -19,28 +19,31 @@ def hello() -> None:
     print("Hello ! :wave:")
 
 
+def format_time(t: int) -> None:
+    """ Format the time in a human readable format"""
+    if t < (nd:=10**3):
+        return f"{t}ns"
+    s = f"{t%10**3}ns"
+    if t < (nd:=10**3*(d:=nd)):
+        return f"{t//d}µs {s}"
+    s = f"{t//d%10**3}µs"
+    if t < (nd:=10**3*(d:=nd)):
+        return f"{t//d}ms {s}"
+    s = f"{t//d%10**3}ms"
+    if t < (nd:=60*(d:=nd)):
+        return f"{t//d%60}s {s}"
+    s = f"{t//d%60}s"
+    if t < (nd:=60*(d:=nd)):
+        return f"{t//d%60}min {s}"
+    s = f"{t//d%60}min"
+    if t < (nd:=24*(d:=nd)):
+        return f"{t//d%24}h {s}"
+    return f"{t//nd}j {t//d%24}h {s}"
+
+
 def print_time(t: int, res: str) -> None:
     """ Print the time in a human readable format and the result"""
-    if t < (nd:=10**3):
-        print(f"{t} ns => {res}")
-    elif t < (nd:=10**3*(d:=nd)):
-        print(f"{t//d} µs => {res}")
-    elif t < (nd:=10**3*(d:=nd)):
-        print(f"{t//d} ms => {res}")
-    else:
-        s = f"{t//nd%60} s => {res}"
-        if t < (nd:=60*nd):
-            print(s)
-        else:
-            s = f"{t//nd%60} min {s}"
-            if t < (nd:=60*nd):
-                print(s)
-            else:
-                s = f"{t//nd%24} h {s}"
-                if t < (nd:=24*nd):
-                    print(s)
-                else:
-                    print(f"{t//nd} j {s}")
+    print(format_time(t, res), "=>", res)
 
 
 @main.command()
@@ -124,3 +127,24 @@ def init(d: str) -> None:
         f.write(f"\n\ndef day{d}(lines: list[str]) -> str:\n    return str()\n")
 
     print("Done")
+
+
+@main.command()
+@click.argument("file", default="times")
+@click.argument("rounds", default=1)
+def times(file: str, rounds: int) -> None:
+    """ Time each puzzle"""
+    with open(f"{file}.txt", "w") as o:
+        for g in sorted(globals().keys()):
+            if re.match(r"day\d\d", g):
+                for i in ["a", "b"]:
+                    if (func := getattr(globals()[g], f"{g}{i}", None)):
+                        for d in ["sample", "data"]:
+                            with open(f"{d}/{g}.txt") as f:
+                                lines = f.read().splitlines()
+                                t = time.monotonic_ns()
+                                for _ in range(rounds):
+                                    func(lines[:])
+                                t = (time.monotonic_ns() - t) // rounds
+                                print(s:=f"{g},{i},{d},{t},{format_time(t)}")
+                                o.write(f"{s}\n")

@@ -1,4 +1,4 @@
-from queue import PriorityQueue
+import heapq
 
 E, S, W, N, X = ">", "v", "<", "^", "X"
 MOVES = {E: (0, 1), S: (1, 0), W: (0, -1), N: (-1, 0), X: (0, 0)}
@@ -42,15 +42,15 @@ def day24(lines: list[str], snack: bool = False) -> str:
     if snack:
         goals += [(-1, start), (h, end)]
 
-    queue = PriorityQueue()
+    queue = []
 
     for goal in goals:
         print("Next goal:", goal)
-        queue.put((r + 1, p))
+        heapq.heappush(queue,(r + 1, p))
         seen = set()
 
-        while not queue.empty():
-            q = queue.get()
+        while queue:
+            q = heapq.heappop(queue)
             if q in seen:
                 continue
             seen.add(q)
@@ -71,10 +71,10 @@ def day24(lines: list[str], snack: bool = False) -> str:
                 nx, ny = px + dx, py + dy
                 if (nx, ny) == goal:
                     print("Goal", goal, "in", current_round, "rounds")
-                    p, r, queue = (nx, ny), r + 1, PriorityQueue()
+                    p, r, queue = (nx, ny), r + 1, []
                     break
 
                 elif ((dx, dy) == (0, 0) or 0 <= nx < h and 0 <= ny < w) and not (nx, ny) in blizzards:
-                    queue.put((r + 1, (nx, ny)))
+                    heapq.heappush(queue,(r + 1, (nx, ny)))
 
     return str(current_round)
